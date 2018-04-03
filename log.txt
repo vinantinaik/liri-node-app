@@ -1,0 +1,12 @@
+movie-this Avengers
+IMDB rating: 8.1
+Title: The Avengers
+Rotten Tomatoes rating: 92%
+Plot: Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.
+Language: English, Russian, Hindi
+Country: USA
+Release Year: 2012
+Actors: Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth
+my-tweets undefined
+1 Tweet : first tweet Created at: Sun Apr 01 19:48:07 +0000 2018
+0 Tweet : second tweet Created at: Sun Apr 01 23:26:12 +0000 2018

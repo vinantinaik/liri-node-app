@@ -13,6 +13,32 @@ var FS = require("fs");
 var twitterClient = new Twitter(Keys.twitter);
 var spotifyClient = new Spotify(Keys.spotify);
 
+
+
+//Process commands
+function ProcessCommand(command, value) {
+    console.log(command + " " + value);
+    switch (command) {
+        case "my-tweets":
+            myTweets();
+            break;
+        case "spotify-this-song":
+            var song = typeof (value) === 'undefined' ? 'The Sign' : value;
+            spotifySong(song);
+            break;
+        case "movie-this":
+            var movie = typeof (value) === 'undefined' ? 'Mr. Nobody.' : value;
+            movieInfo(movie);
+            break;
+        case "do-what-it-says":
+            doWhatItSays();
+            break;
+        default:
+            break;
+    }
+
+}
+
 /** Get tweets*/
 var myTweets = function () {
     twitterClient.get("statuses/user_timeline", function (error, tweets, response) {
@@ -20,6 +46,7 @@ var myTweets = function () {
 
         for (var i = 0; i < tweets.length; i++) {
             console.log(`${i} Tweet : ${tweets[i].text} Created at: ${tweets[i].created_at}`);
+
         }
     })
 
@@ -79,42 +106,45 @@ var doWhatItSays = function () {
             return console.log(error);
         }
 
-        // We will then print the contents of data
-        console.log(data);
-
         // Then split it by commas (to make it more readable)
         var dataArr = data.split(",");
 
         // We will then re-display the content as an array for later use.
         console.log(dataArr);
-        spotifySong(dataArr[1]);
+        for (var i = 0; i < dataArr.length; i += 2) {
+            var command = dataArr[i];
+            var value = dataArr[i + 1];
+            ProcessCommand(command, value);
+
+        }
+
+
 
     });
 
 }
 
-var log = function()
-{
-    FS.appendFile("./log.txt", "Hello Kitty\n", function(err) {
+var liriLog = console.log;
+console.log = function (message) {
+
+    FS.appendFile("./log.txt", message + "\n", function (err) {
 
         // If an error was experienced we say it.
         if (err) {
-          console.log(err);
+            return liriLog(err);
         }
-      
+
         // If no error is experienced, we'll log the phrase "Content Added" to our node console.
         else {
-          console.log("Content Added!");
+            liriLog(message);
         }
-      
-      });
+
+    });
 }
 
+
+
+
 module.exports = {
-    myTweets: myTweets,
-    spotifySong: spotifySong,
-    movieInfo: movieInfo,
-    doWhatItSays: doWhatItSays
-
-
+    ProcessCommand: ProcessCommand
 };
